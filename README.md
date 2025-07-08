@@ -12,8 +12,7 @@
 -  View all your entries for today with `devtrack today`
 - Optional tagging for filtering and future stats
 -  Simple JSON storage — no database needed
--  Terminal-friendly with emoji feedback
-
+-  weekly xp gained.
 ---
 
 ## Usage
@@ -43,10 +42,10 @@ bash
 Copy
 Edit
 sudo mv devtrack /usr/local/bin
-Now you can use devtrack from anywhere!
+Now you can use devtrack from anywhere!..How cool is that!!
 
  Coming Soon
- devtrack stats — total logs, streaks, XP, top tags
+ devtrack stats — total logs, streaks, top tags
 
  Themes, badges, and gamification
 
