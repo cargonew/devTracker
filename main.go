@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 	"time"
+
 )
 
 type LogEntry struct {
@@ -23,7 +24,7 @@ const logFile = "log.json"
 const xpFile = "xp.json"
 
 var validXpGain = map[string]int{
-	"Learned Go":                 100,
+"Learned Go":                 100,
 	"Learned Rust":               120,
 	"Did easy leetcode":          20,
 	"Did medium leetcode":        40,
@@ -59,6 +60,8 @@ func main() {
 
 	case "progress":
 		showProgress()
+	case "streak": 
+		showStreak()
 
 	default:
 		fmt.Println("Unknown command:", os.Args[1])
@@ -177,7 +180,62 @@ func showProgress() {
 	for day, xp := range progress {
 		fmt.Printf("%s: %d XP\n", day, xp)
 	}
+
+	TotalXp := 0//For overall Xp gained to this time
+
+	for _,xp := range progress{ 
+		TotalXp +=xp
+	}
+
+	fmt.Println("________________________________")	
+	fmt.Printf("You have a total of %dXP", TotalXp)
+
 }
 
+
+func  showStreak(){ 
+
+	var logs []LogEntry
+	data ,err := os.ReadFile(logFile)
+
+	if err !=nil{ 
+		fmt.Println("No logs availbe yet")
+		return
+	}
+
+
+	json.Unmarshal(data , &logs)
+
+	dateMap := make(map[string]bool)
+
+	for _,log := range logs{ 
+
+		day := log.Timestamp.Format("2006-01-02")
+
+		dateMap[day] = true 
+	}
+
+	streak := 0 
+
+
+	for i := 0 ; ;i++{ 
+
+		day := time.Now().AddDate(0 , 0 ,-i).Format("2006-01-02")
+
+		if dateMap[day]{ 
+
+			streak++
+		} else { 
+			break
+		}
+	}
+
+	if streak ==0{ 
+		fmt.Println("No streak yet?,You better start working man!")
+
+	}else { 
+		fmt.Printf("Current streak %d day(s)\n", streak)
+	}
+}
 
 
